@@ -1,5 +1,6 @@
 package archives.tater.entitycompasses;
 
+import archives.tater.entitycompasses.datagen.ModItemTagsProvider;
 import archives.tater.entitycompasses.datagen.ModLanguageProvider;
 import archives.tater.entitycompasses.datagen.ModModelProvider;
 
@@ -12,5 +13,6 @@ public class EntityCompassesDataGenerator implements DataGeneratorEntrypoint {
 		var pack = fabricDataGenerator.createPack();
 		pack.addProvider(ModModelProvider::new);
 		pack.addProvider(ModLanguageProvider::new);
+		pack.addProvider(ModItemTagsProvider::new);
 	}
 }

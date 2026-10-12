@@ -53,7 +53,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-    modCompileOnly "dev.simulated_team.simulated:simulated-common-1.21.1:${project.aeronautics_version}"
+    compileOnly "dev.simulated_team.simulated:simulated-common-1.21.1:${project.aeronautics_version}"
+	compileOnly ("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+	compileOnly "net.createmod.ponder:ponder-neoforge:${ponder_version}+mc${minecraft_version}"
+	compileOnly "com.tterrag.registrate:Registrate:${registrate_version}"
 }
 
 processResources {

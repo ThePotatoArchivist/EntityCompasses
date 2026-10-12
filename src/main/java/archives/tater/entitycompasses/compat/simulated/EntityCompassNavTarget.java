@@ -1,0 +1,23 @@
+package archives.tater.entitycompasses.compat.simulated;
+
+import archives.tater.entitycompasses.registry.EntityCompassesComponents;
+
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+
+import dev.simulated_team.simulated.content.blocks.nav_table.NavTableBlockEntity;
+import dev.simulated_team.simulated.content.blocks.nav_table.navigation_target.NavigationTarget;
+import org.jetbrains.annotations.Nullable;
+
+public class EntityCompassNavTarget implements NavigationTarget {
+    @Override
+    public @Nullable Vec3 getTarget(NavTableBlockEntity navBE, ItemStack self) {
+        if (!(navBE.getLevel() instanceof ServerLevel serverLevel)) return null;
+        var target = self.get(EntityCompassesComponents.ENTITY_TARGET);
+        if (target == null) return null;
+        var entity = target.get(serverLevel);
+        if (entity == null) return null;
+        return entity.position();
+    }
+}
