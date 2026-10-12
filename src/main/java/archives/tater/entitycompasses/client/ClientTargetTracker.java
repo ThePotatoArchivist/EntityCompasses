@@ -1,6 +1,5 @@
 package archives.tater.entitycompasses.client;
 
-import archives.tater.entitycompasses.EntityCompasses;
 import archives.tater.entitycompasses.tracker.TrackerTarget;
 
 import java.util.Map;
@@ -14,7 +13,6 @@ public class ClientTargetTracker {
     }
 
     public static void update(Object key, TrackerTarget target) {
-        EntityCompasses.LOGGER.info("Tracker update: {}, {}", key, target);
         if (target == TrackerTarget.NONE)
             trackers.remove(key);
         else
