@@ -1,18 +1,22 @@
 package archives.tater.entitycompasses.item;
 
 import archives.tater.entitycompasses.EntityReference;
+import archives.tater.entitycompasses.registry.EntityCompassesAttachments;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("UnstableApiUsage")
 public class EntityCompassItem extends Item {
     public EntityCompassItem(Properties properties) {
         super(properties);
@@ -33,6 +37,12 @@ public class EntityCompassItem extends Item {
         stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(player));
         player.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResultHolder.success(stack);
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        if (!(entity instanceof ServerPlayer serverPlayer)) return;
+        level.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TARGET_TRACKER).addTracker(serverPlayer, stack);
     }
 
     @Override

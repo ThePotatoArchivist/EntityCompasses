@@ -1,0 +1,4 @@
+@MethodsReturnNonnullByDefault
+package archives.tater.entitycompasses.network;
+
+import net.minecraft.MethodsReturnNonnullByDefault;

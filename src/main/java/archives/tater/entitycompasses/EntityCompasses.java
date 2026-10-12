@@ -1,9 +1,13 @@
 package archives.tater.entitycompasses;
 
+import archives.tater.entitycompasses.registry.EntityCompassesAttachments;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 import archives.tater.entitycompasses.registry.EntityCompassesItems;
+import archives.tater.entitycompasses.registry.EntityCompassesNetworking;
+import archives.tater.entitycompasses.tracker.TargetTracker;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import net.minecraft.resources.Identifier;
 
@@ -26,6 +30,12 @@ public class EntityCompasses implements ModInitializer {
 
         EntityCompassesComponents.init();
         EntityCompassesItems.init();
+        EntityCompassesAttachments.init();
+        EntityCompassesNetworking.init();
+
+        ServerTickEvents.END_WORLD_TICK.register(level -> {
+            TargetTracker.tick(level, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
+        });
     }
 
     public static Identifier id(String path) {

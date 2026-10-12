@@ -1,0 +1,4 @@
+@MethodsReturnNonnullByDefault
+package archives.tater.entitycompasses.tracker;
+
+import net.minecraft.MethodsReturnNonnullByDefault;
