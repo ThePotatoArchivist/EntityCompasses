@@ -1,7 +1,7 @@
 package archives.tater.entitycompasses.item;
 
-import archives.tater.entitycompasses.EntityCompasses;
 import archives.tater.entitycompasses.EntityReference;
+import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -20,7 +20,7 @@ public class EntityCompassItem extends Item {
 
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand hand) {
-        stack.set(EntityCompasses.ENTITY_TARGET, new EntityReference(interactionTarget));
+        stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(interactionTarget));
         player.setItemInHand(hand, stack);
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResult.SUCCESS;
@@ -30,13 +30,13 @@ public class EntityCompassItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         if (!player.isSecondaryUseActive()) return InteractionResultHolder.pass(stack);
-        stack.set(EntityCompasses.ENTITY_TARGET, new EntityReference(player));
+        stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(player));
         player.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResultHolder.success(stack);
     }
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        return stack.has(EntityCompasses.ENTITY_TARGET) || super.isFoil(stack);
+        return stack.has(EntityCompassesComponents.ENTITY_TARGET) || super.isFoil(stack);
     }
 }

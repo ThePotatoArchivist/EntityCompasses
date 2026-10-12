@@ -1,7 +1,7 @@
 package archives.tater.entitycompasses.datagen;
 
-import archives.tater.entitycompasses.EntityCompasses;
 import archives.tater.entitycompasses.EntityCompassesClient;
+import archives.tater.entitycompasses.registry.EntityCompassesItems;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -42,7 +42,7 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
-        generateCompass(itemModelGenerator, EntityCompasses.ENTITY_COMPASS);
+        generateCompass(itemModelGenerator, EntityCompassesItems.ENTITY_COMPASS);
     }
 
     private static void generateCompass(ItemModelGenerators itemModelGenerator, Item item) {

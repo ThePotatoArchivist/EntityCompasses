@@ -1,5 +1,7 @@
 package archives.tater.entitycompasses;
 
+import archives.tater.entitycompasses.registry.EntityCompassesItems;
+
 import net.fabricmc.api.ClientModInitializer;
 
 import net.minecraft.client.renderer.item.CompassItemPropertyFunction;
@@ -11,7 +13,8 @@ public class EntityCompassesClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ItemProperties.register(EntityCompasses.ENTITY_COMPASS, ANGLE_MODEL_PREDICATE, new CompassItemPropertyFunction((level, stack, entity) -> {
+        ItemProperties.register(
+                EntityCompassesItems.ENTITY_COMPASS, ANGLE_MODEL_PREDICATE, new CompassItemPropertyFunction((level, stack, entity) -> {
             return null;
         }));
     }

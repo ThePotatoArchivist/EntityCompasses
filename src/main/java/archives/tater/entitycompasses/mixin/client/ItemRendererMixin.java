@@ -1,6 +1,6 @@
 package archives.tater.entitycompasses.mixin.client;
 
-import archives.tater.entitycompasses.EntityCompasses;
+import archives.tater.entitycompasses.registry.EntityCompassesItems;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +16,6 @@ public class ItemRendererMixin {
             at = @At("RETURN")
     )
     private static boolean entityCompass(boolean original, ItemStack stack) {
-        return original || stack.is(EntityCompasses.ENTITY_COMPASS);
+        return original || stack.is(EntityCompassesItems.ENTITY_COMPASS);
     }
 }
