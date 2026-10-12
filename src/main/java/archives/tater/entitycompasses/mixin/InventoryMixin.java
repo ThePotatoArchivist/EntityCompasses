@@ -28,5 +28,6 @@ public class InventoryMixin {
         if (!(player instanceof ServerPlayer serverPlayer)) return;
 
         TargetTracker.clearTrackers(serverPlayer, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
+        TargetTracker.clearTrackers(serverPlayer, EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER);
     }
 }

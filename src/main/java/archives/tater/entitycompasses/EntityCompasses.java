@@ -35,6 +35,7 @@ public class EntityCompasses implements ModInitializer {
 
         ServerTickEvents.END_WORLD_TICK.register(level -> {
             TargetTracker.tick(level, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
+            TargetTracker.tick(level, EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER);
         });
     }
 

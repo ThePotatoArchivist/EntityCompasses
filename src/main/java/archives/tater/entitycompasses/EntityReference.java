@@ -52,4 +52,9 @@ public final class EntityReference {
     public int hashCode() {
         return Objects.hashCode(uuid);
     }
+
+    @Override
+    public String toString() {
+        return "EntityReference{uuid=" + uuid + ", entity=" + (entity == null ? "unresolved" : entity.getName().toString()) + '}';
+    }
 }

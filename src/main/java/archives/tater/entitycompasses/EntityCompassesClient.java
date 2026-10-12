@@ -3,6 +3,7 @@ package archives.tater.entitycompasses;
 import archives.tater.entitycompasses.client.ClientTargetTracker;
 import archives.tater.entitycompasses.client.TrackerItemPropertyFunction;
 import archives.tater.entitycompasses.network.EntityTargetUpdatePayload;
+import archives.tater.entitycompasses.network.EntityTypeTargetUpdatePayload;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 import archives.tater.entitycompasses.registry.EntityCompassesItems;
 
@@ -23,8 +24,12 @@ public class EntityCompassesClient implements ClientModInitializer {
         });
 
         ItemProperties.register(EntityCompassesItems.ENTITY_COMPASS, ANGLE_MODEL_PREDICATE, new TrackerItemPropertyFunction(EntityCompassesComponents.ENTITY_TARGET));
+        ItemProperties.register(EntityCompassesItems.ENTITY_TYPE_COMPASS, ANGLE_MODEL_PREDICATE, new TrackerItemPropertyFunction(EntityCompassesComponents.ENTITY_TYPE_TARGET));
 
         ClientPlayNetworking.registerGlobalReceiver(EntityTargetUpdatePayload.TYPE, (payload, context) -> {
+            ClientTargetTracker.update(payload.component(), payload.target());
+        });
+        ClientPlayNetworking.registerGlobalReceiver(EntityTypeTargetUpdatePayload.TYPE, (payload, context) -> {
             ClientTargetTracker.update(payload.component(), payload.target());
         });
     }

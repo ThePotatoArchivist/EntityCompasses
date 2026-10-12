@@ -1,29 +1,34 @@
 package archives.tater.entitycompasses.item;
 
+import archives.tater.entitycompasses.registry.EntityCompassesAttachments;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 import java.util.List;
 import java.util.stream.Stream;
 
+@SuppressWarnings("UnstableApiUsage")
 public class EntityTypeCompassItem extends Item {
     public EntityTypeCompassItem(Properties properties) {
         super(properties);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand hand) {
         var set = stack.get(EntityCompassesComponents.ENTITY_TYPE_TARGET);
@@ -36,13 +41,19 @@ public class EntityTypeCompassItem extends Item {
         } else {
             if (interactionTarget.getType().is(set)) return InteractionResult.FAIL;
 
-            stack.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, HolderSet.direct(Stream.concat(set.stream(), Stream.of(BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(interactionTarget.getType()))).toList()));
+            stack.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, HolderSet.direct(Stream.concat(set.stream(), Stream.of(interactionTarget.getType().builtInRegistryHolder())).toList()));
         }
 
         player.setItemInHand(hand, stack);
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+        if (entity instanceof ServerPlayer serverPlayer)
+            level.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER).addTracker(serverPlayer, stack);
     }
 
     @Override
