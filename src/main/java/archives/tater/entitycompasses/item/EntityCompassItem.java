@@ -4,6 +4,9 @@ import archives.tater.entitycompasses.EntityReference;
 import archives.tater.entitycompasses.registry.EntityCompassesAttachments;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -14,10 +17,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+
+import java.util.List;
 
 @SuppressWarnings("UnstableApiUsage")
 public class EntityCompassItem extends Item {
+    public static final Component UNKNOWN_ENTITY = Component.translatable("item.entitycompass.entity_comapss.unknown");
+
     public EntityCompassItem(Properties properties) {
         super(properties);
     }
@@ -41,12 +49,38 @@ public class EntityCompassItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (!(entity instanceof ServerPlayer serverPlayer)) return;
-        level.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TARGET_TRACKER).addTracker(serverPlayer, stack);
+        if (entity instanceof ServerPlayer serverPlayer)
+            level.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TARGET_TRACKER).addTracker(serverPlayer, stack);
+
+        if (level instanceof ServerLevel serverLevel) {
+            var target = stack.get(EntityCompassesComponents.ENTITY_TARGET);
+            if (target == null) {
+                stack.remove(EntityCompassesComponents.ENTITY_TARGET_NAME);
+                return;
+            }
+
+            var targetEntity = target.get(serverLevel);
+            if (targetEntity == null) {
+                if (!stack.has(EntityCompassesComponents.ENTITY_TARGET_NAME))
+                    stack.set(EntityCompassesComponents.ENTITY_TARGET_NAME, UNKNOWN_ENTITY);
+                return;
+            }
+
+            var name = targetEntity.getName();
+            if (!name.equals(stack.get(EntityCompassesComponents.ENTITY_TARGET_NAME)))
+                stack.set(EntityCompassesComponents.ENTITY_TARGET_NAME, name);
+        }
     }
 
     @Override
     public boolean isFoil(ItemStack stack) {
         return stack.has(EntityCompassesComponents.ENTITY_TARGET) || super.isFoil(stack);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+        var name = stack.get(EntityCompassesComponents.ENTITY_TARGET_NAME);
+        if (name == null) return;
+        tooltipComponents.add(name.copy().withStyle(ChatFormatting.GRAY));
     }
 }

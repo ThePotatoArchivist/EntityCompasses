@@ -1,0 +1,4 @@
+@MethodsReturnNonnullByDefault
+package archives.tater.entitycompasses.datagen;
+
+import net.minecraft.MethodsReturnNonnullByDefault;

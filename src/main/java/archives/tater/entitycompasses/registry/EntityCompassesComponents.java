@@ -9,6 +9,8 @@ import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.entity.EntityType;
 
@@ -36,6 +38,12 @@ public interface EntityCompassesComponents {
     DataComponentType<HolderSet<EntityType<?>>> ENTITY_TYPE_TARGET = register("entity_type_target", builder -> builder
             .persistent(RegistryCodecs.homogeneousList(Registries.ENTITY_TYPE))
             .networkSynchronized(ByteBufCodecs.holderSet(Registries.ENTITY_TYPE))
+            .cacheEncoding()
+    );
+
+    DataComponentType<Component> ENTITY_TARGET_NAME = register("entity_target_name", builder -> builder
+            .persistent(ComponentSerialization.CODEC)
+            .networkSynchronized(ComponentSerialization.STREAM_CODEC)
             .cacheEncoding()
     );
 
