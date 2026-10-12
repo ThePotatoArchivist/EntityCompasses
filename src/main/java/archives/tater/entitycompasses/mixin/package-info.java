@@ -1,0 +1,4 @@
+@MethodsReturnNonnullByDefault
+package archives.tater.entitycompasses.mixin;
+
+import net.minecraft.MethodsReturnNonnullByDefault;
