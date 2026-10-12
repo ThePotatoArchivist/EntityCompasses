@@ -1,6 +1,7 @@
 package archives.tater.entitycompasses.datagen;
 
 import archives.tater.entitycompasses.EntityCompasses;
+import archives.tater.entitycompasses.EntityCompassesClient;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -30,8 +31,6 @@ import static net.minecraft.data.models.model.TextureMapping.layer0;
 
 public class ModModelProvider extends FabricModelProvider {
 
-    public static final Identifier ANGLE = Identifier.withDefaultNamespace("angle"); // TODO
-
     public ModModelProvider(FabricDataOutput output) {
         super(output);
     }
@@ -55,13 +54,13 @@ public class ModModelProvider extends FabricModelProvider {
                 IntStream.range(0, 32)
                         .mapToObj(i -> {
                             if (i == 0)
-                                return new ItemOverride(getModelLocation(item), List.of(new ItemOverride.Predicate(ANGLE, 0)));
+                                return new ItemOverride(getModelLocation(item), List.of(new ItemOverride.Predicate(EntityCompassesClient.ANGLE_MODEL_PREDICATE, 0)));
 
                             var index = (i + 16) % 32;
                             var angle = i / 32f - 1 / 64f;
                             return new ItemOverride(
                                     getModelLocation(item, String.format(Locale.ROOT, "_%02d", index)),
-                                    List.of(new ItemOverride.Predicate(ANGLE, angle))
+                                    List.of(new ItemOverride.Predicate(EntityCompassesClient.ANGLE_MODEL_PREDICATE, angle))
                             );
                         })
                         .toList(),

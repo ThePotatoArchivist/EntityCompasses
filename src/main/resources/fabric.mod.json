@@ -18,6 +18,9 @@
 		"main": [
 			"archives.tater.entitycompasses.EntityCompasses"
 		],
+		"client": [
+			"archives.tater.entitycompasses.EntityCompassesClient"
+		],
 		"fabric-datagen": [
 			"archives.tater.entitycompasses.EntityCompassesDataGenerator"
 		]

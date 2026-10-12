@@ -34,4 +34,9 @@ public class EntityCompassItem extends Item {
         player.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResultHolder.success(stack);
     }
+
+    @Override
+    public boolean isFoil(ItemStack stack) {
+        return stack.has(EntityCompasses.ENTITY_TARGET) || super.isFoil(stack);
+    }
 }
