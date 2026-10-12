@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "entitycompasses:item/entity_type_compass_19"
+  }
+}

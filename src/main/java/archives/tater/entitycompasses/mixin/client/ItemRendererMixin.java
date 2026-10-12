@@ -16,6 +16,6 @@ public class ItemRendererMixin {
             at = @At("RETURN")
     )
     private static boolean entityCompass(boolean original, ItemStack stack) {
-        return original || stack.is(EntityCompassesItems.ENTITY_COMPASS);
+        return original || stack.is(EntityCompassesItems.ENTITY_COMPASS) || stack.is(EntityCompassesItems.ENTITY_TYPE_COMPASS);
     }
 }

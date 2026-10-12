@@ -43,6 +43,7 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         generateCompass(itemModelGenerator, EntityCompassesItems.ENTITY_COMPASS);
+        generateCompass(itemModelGenerator, EntityCompassesItems.ENTITY_TYPE_COMPASS);
     }
 
     private static void generateCompass(ItemModelGenerators itemModelGenerator, Item item) {

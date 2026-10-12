@@ -1,0 +1,200 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "entitycompasses:item/entity_type_compass",
+      "predicate": {
+        "entitycompasses:angle": 0.0
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_17",
+      "predicate": {
+        "entitycompasses:angle": 0.015625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_18",
+      "predicate": {
+        "entitycompasses:angle": 0.046875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_19",
+      "predicate": {
+        "entitycompasses:angle": 0.078125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_20",
+      "predicate": {
+        "entitycompasses:angle": 0.109375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_21",
+      "predicate": {
+        "entitycompasses:angle": 0.140625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_22",
+      "predicate": {
+        "entitycompasses:angle": 0.171875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_23",
+      "predicate": {
+        "entitycompasses:angle": 0.203125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_24",
+      "predicate": {
+        "entitycompasses:angle": 0.234375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_25",
+      "predicate": {
+        "entitycompasses:angle": 0.265625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_26",
+      "predicate": {
+        "entitycompasses:angle": 0.296875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_27",
+      "predicate": {
+        "entitycompasses:angle": 0.328125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_28",
+      "predicate": {
+        "entitycompasses:angle": 0.359375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_29",
+      "predicate": {
+        "entitycompasses:angle": 0.390625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_30",
+      "predicate": {
+        "entitycompasses:angle": 0.421875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_31",
+      "predicate": {
+        "entitycompasses:angle": 0.453125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_00",
+      "predicate": {
+        "entitycompasses:angle": 0.484375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_01",
+      "predicate": {
+        "entitycompasses:angle": 0.515625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_02",
+      "predicate": {
+        "entitycompasses:angle": 0.546875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_03",
+      "predicate": {
+        "entitycompasses:angle": 0.578125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_04",
+      "predicate": {
+        "entitycompasses:angle": 0.609375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_05",
+      "predicate": {
+        "entitycompasses:angle": 0.640625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_06",
+      "predicate": {
+        "entitycompasses:angle": 0.671875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_07",
+      "predicate": {
+        "entitycompasses:angle": 0.703125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_08",
+      "predicate": {
+        "entitycompasses:angle": 0.734375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_09",
+      "predicate": {
+        "entitycompasses:angle": 0.765625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_10",
+      "predicate": {
+        "entitycompasses:angle": 0.796875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_11",
+      "predicate": {
+        "entitycompasses:angle": 0.828125
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_12",
+      "predicate": {
+        "entitycompasses:angle": 0.859375
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_13",
+      "predicate": {
+        "entitycompasses:angle": 0.890625
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_14",
+      "predicate": {
+        "entitycompasses:angle": 0.921875
+      }
+    },
+    {
+      "model": "entitycompasses:item/entity_type_compass_15",
+      "predicate": {
+        "entitycompasses:angle": 0.953125
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "entitycompasses:item/entity_type_compass_16"
+  }
+}
