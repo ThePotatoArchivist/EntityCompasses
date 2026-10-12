@@ -13,16 +13,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+import static java.util.Objects.requireNonNullElse;
+
 @SuppressWarnings("UnstableApiUsage")
 public abstract class TargetTracker<T> {
     private final Map<ServerPlayer, Set<T>> trackers = new WeakHashMap<>();
-    private final Map<ServerPlayer, Map<T, BlockPos>> lastPositions = new WeakHashMap<>();
+    private final Map<ServerPlayer, Map<T, TrackerTarget>> lastPositions = new WeakHashMap<>();
 
     protected abstract @Nullable BlockPos findTarget(ServerLevel level, T component, Vec3 origin);
 
     protected abstract DataComponentType<T> componentType();
 
-    protected abstract void sendUpdate(ServerPlayer player, T component, @Nullable BlockPos target);
+    protected abstract void sendUpdate(ServerPlayer player, T component, TrackerTarget target);
 
     public void clearTrackers(ServerPlayer player) {
         var set = trackers.get(player);
@@ -40,8 +42,8 @@ public abstract class TargetTracker<T> {
         trackers.forEach((serverPlayer, trackers) -> {
             var last = lastPositions.computeIfAbsent(serverPlayer, player -> new HashMap<>(trackers.size()));
             for (var tracker : trackers) {
-                var target = findTarget(level, tracker, serverPlayer.position());
-                if (!Objects.equals(last.put(tracker, target), target))
+                var target = TrackerTarget.create(findTarget(level, tracker, serverPlayer.position()), serverPlayer.position());
+                if (!target.equals(requireNonNullElse(last.put(tracker, target), TrackerTarget.NONE)))
                     sendUpdate(serverPlayer, tracker, target);
             }
         });

@@ -14,8 +14,6 @@ import net.minecraft.world.phys.Vec3;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
 public class EntityTargetTracker extends TargetTracker<EntityReference> {
     @Override
     protected @Nullable BlockPos findTarget(ServerLevel level, EntityReference component, Vec3 origin) {
@@ -30,7 +28,7 @@ public class EntityTargetTracker extends TargetTracker<EntityReference> {
     }
 
     @Override
-    protected void sendUpdate(ServerPlayer player, EntityReference component, @Nullable BlockPos target) {
-        ServerPlayNetworking.send(player, new EntityTargetUpdatePayload(component, Optional.ofNullable(target)));
+    protected void sendUpdate(ServerPlayer player, EntityReference component, TrackerTarget target) {
+        ServerPlayNetworking.send(player, new EntityTargetUpdatePayload(component, target));
     }
 }

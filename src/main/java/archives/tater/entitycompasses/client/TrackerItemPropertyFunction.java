@@ -11,7 +11,7 @@ public class TrackerItemPropertyFunction extends CompassItemPropertyFunction {
             if (component == null) return null;
             var target = ClientTargetTracker.get(stack.get(componentType));
             if (target == null) return null;
-            return new GlobalPos(level.dimension(), target);
+            return new GlobalPos(level.dimension(), target.getApproximatePosition(entity.position()));
         });
     }
 }
