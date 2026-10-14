@@ -12,7 +12,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
@@ -96,15 +95,11 @@ public record EntityTypeTarget(HolderSet<EntityType<?>> entities, int range) imp
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
         if (entities.size() != 0)
             tooltipAdder.accept(entities.unwrap().map(
-                    EntityTypeTarget::getTranslationOrFallback,
+                    tag -> Component.translatableWithFallback(tag.getTranslationKey(), FALLBACK_TAG_NAME.apply(tag)),
                     set -> ComponentUtils.formatList(set, type -> type.value().getDescription()).copy()
             ).withStyle(ChatFormatting.GRAY));
 
         tooltipAdder.accept(Component.translatable("item.entitycompasses.entity_type_compass.range", range).withStyle(ChatFormatting.GRAY));
-    }
-
-    private static MutableComponent getTranslationOrFallback(TagKey<EntityType<?>> tag) {
-        return Component.translatable(tag.getTranslationKey(), FALLBACK_TAG_NAME.apply(tag));
     }
 
     private static String snakeCaseToTitleCase(String s) {

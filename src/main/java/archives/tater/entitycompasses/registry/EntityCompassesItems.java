@@ -22,12 +22,9 @@ public interface EntityCompassesItems {
         );
     }
 
-    Item ENTITY_COMPASS = register("entity_compass", new EntityCompassItem(new Item.Properties()
-            .stacksTo(1)
-    ));
+    Item ENTITY_COMPASS = register("entity_compass", new EntityCompassItem(new Item.Properties()));
 
     Item ENTITY_TYPE_COMPASS = register("entity_type_compass", new EntityTypeCompassItem(new Item.Properties()
-            .stacksTo(1)
             .component(EntityCompassesComponents.ENTITY_TYPE_TARGET, EntityTypeTarget.DEFAULT)
     ));
 
