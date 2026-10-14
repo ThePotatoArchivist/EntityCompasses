@@ -1,7 +1,7 @@
 package archives.tater.entitycompasses.registry;
 
 import archives.tater.entitycompasses.EntityCompasses;
-import archives.tater.entitycompasses.item.EntityTypeCompassItem;
+import archives.tater.entitycompasses.component.EntityTypeTarget;
 import archives.tater.entitycompasses.network.EntityTargetUpdatePayload;
 import archives.tater.entitycompasses.network.EntityTypeTargetUpdatePayload;
 import archives.tater.entitycompasses.network.RangeScrollPayload;
@@ -41,7 +41,7 @@ public interface EntityCompassesNetworking {
             menu.suppressRemoteUpdates();
             var slot = menu.getSlot(slotIndex);
             var stack = slot.getItem();
-            EntityTypeCompassItem.addRange(stack, payload.amount());
+            EntityTypeTarget.addRange(stack, payload.amount());
             menu.resumeRemoteUpdates();
             if (stateMatch) {
                 menu.broadcastFullState();

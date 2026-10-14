@@ -1,5 +1,6 @@
 {
   "item.entitycompass.entity_comapss.unknown": "???",
   "item.entitycompasses.entity_compass": "Entity Compass",
-  "item.entitycompasses.entity_type_compass": "Entity Type Compass"
+  "item.entitycompasses.entity_type_compass": "Entity Type Compass",
+  "item.entitycompasses.entity_type_compass.range": "Range: %s"
 }

@@ -2,7 +2,7 @@ package archives.tater.entitycompasses;
 
 import archives.tater.entitycompasses.client.ClientTargetTracker;
 import archives.tater.entitycompasses.client.TrackerItemPropertyFunction;
-import archives.tater.entitycompasses.item.EntityTypeCompassItem;
+import archives.tater.entitycompasses.component.EntityTypeTarget;
 import archives.tater.entitycompasses.mixin.AbstractContainerScreenAccessor;
 import archives.tater.entitycompasses.network.EntityTargetUpdatePayload;
 import archives.tater.entitycompasses.network.EntityTypeTargetUpdatePayload;
@@ -29,7 +29,7 @@ public class EntityCompassesClient implements ClientModInitializer {
         var slot = ((AbstractContainerScreenAccessor) screen).callFindSlot(x, y);
         if (slot == null) return true;
         var stack = slot.getItem();
-        if (!stack.has(EntityCompassesComponents.TARGET_RANGE)) return true;
+        if (!stack.has(EntityCompassesComponents.ENTITY_TYPE_TARGET)) return true;
 
         if (accScroll * scroll < 0)
             accScroll = 0;
@@ -43,7 +43,7 @@ public class EntityCompassesClient implements ClientModInitializer {
                 ? -10 * amt
                 : -amt;
 
-        if (!EntityTypeCompassItem.addRange(stack, changeAmount)) return true;
+        if (!EntityTypeTarget.addRange(stack, changeAmount)) return true;
 
         ClientPlayNetworking.send(new RangeScrollPayload(
                 screen.getMenu().containerId,

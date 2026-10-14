@@ -1,4 +1,4 @@
-// 1.21.1	2026-10-14T15:05:22.194231697	EntityCompasses/Model Definitions
+// 1.21.1	2026-10-14T16:11:44.654277383	EntityCompasses/Model Definitions
 d1a379b467a3d6d9969b40640401dceeae3a5ad2 assets/entitycompasses/models/item/entity_type_compass_07.json
 e87a7cfa0d51bf0a66d2fa62b8e3c2d45b1de3a1 assets/entitycompasses/models/item/entity_compass_18.json
 e614300c75632b77812920d03a5ae0baee602db6 assets/entitycompasses/models/item/entity_type_compass_01.json
@@ -39,8 +39,8 @@ c8c2f1320e3be89397a3231a21699d26fc9a63b1 assets/entitycompasses/models/item/enti
 ce1dca5f2e3ae19ce23cd9d2445bd91a520af5e4 assets/entitycompasses/models/item/entity_type_compass_18.json
 bc5e8835d8ff6f05bcfa162c4e4db4b8e62b3baf assets/entitycompasses/models/item/entity_compass_10.json
 ef9523bd260a6f8b691b888d6ed4f0ee6a1e26ce assets/entitycompasses/models/item/entity_compass_31.json
-597d6defe3727a815f0b8ef51dbd6c0952664477 assets/entitycompasses/models/item/entity_type_compass_09.json
 ad11dd96202448cf67bb59877d9a570641a05511 assets/entitycompasses/models/item/entity_compass_24.json
+597d6defe3727a815f0b8ef51dbd6c0952664477 assets/entitycompasses/models/item/entity_type_compass_09.json
 9028486d4767a138c06ca6d16342e59ecf466cdc assets/entitycompasses/models/item/entity_type_compass_30.json
 9f724f00afa72c0ee717ae61b870f5422291388c assets/entitycompasses/models/item/entity_type_compass_17.json
 529ad44fad23f1466576c23f4865d3511df6465e assets/entitycompasses/models/item/entity_type_compass_03.json

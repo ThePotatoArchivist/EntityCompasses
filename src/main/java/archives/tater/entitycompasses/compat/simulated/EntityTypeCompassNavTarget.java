@@ -17,7 +17,7 @@ public class EntityTypeCompassNavTarget implements NavigationTarget {
         if (!(navBE.getLevel() instanceof ServerLevel serverLevel)) return null;
         var target = self.get(EntityCompassesComponents.ENTITY_TYPE_TARGET);
         if (target == null) return null;
-        var entity = EntityTypeTargetTracker.getClosest(serverLevel, target, navBE.getProjectedSelfPos());
+        var entity = EntityTypeTargetTracker.getClosest(serverLevel, target.entities(), target.range(), navBE.getProjectedSelfPos());
         if (entity == null) return null;
         return new Vec3(entity.getX(), entity.getY(0.5), entity.getZ());
     }

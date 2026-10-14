@@ -1,5 +1,6 @@
 package archives.tater.entitycompasses.tracker;
 
+import archives.tater.entitycompasses.component.EntityTypeTarget;
 import archives.tater.entitycompasses.network.EntityTypeTargetUpdatePayload;
 import archives.tater.entitycompasses.registry.EntityCompassesComponents;
 
@@ -21,32 +22,17 @@ import java.util.stream.Stream;
 
 import static java.util.Comparator.comparingDouble;
 
-public class EntityTypeTargetTracker extends TargetTracker<HolderSet<EntityType<?>>> {
-    public static final int SMALL = 4 * 16;
-    public static final int MEDIUM = 16 * 16;
-    public static final int LARGE = 64 * 16;
-
+public class EntityTypeTargetTracker extends TargetTracker<EntityTypeTarget> {
     @Override
-    protected @Nullable BlockPos findTarget(ServerLevel level, HolderSet<EntityType<?>> component, Vec3 origin) {
-        var entity = getClosest(level, component, origin);
+    protected @Nullable BlockPos findTarget(ServerLevel level, EntityTypeTarget component, Vec3 origin) {
+        var entity = getClosest(level, component.entities(), component.range(), origin);
         if (entity == null) return null;
         return entity.blockPosition();
     }
 
-    public static @Nullable Entity getClosest(ServerLevel level, HolderSet<EntityType<?>> component, Vec3 origin) {
-        return getClosest(level, component, origin, SMALL, MEDIUM, LARGE);
-    }
-
-    public static @Nullable Entity getClosest(ServerLevel level, HolderSet<EntityType<?>> component, Vec3 origin, int... ranges) {
-        for (var range : ranges) {
-            var result = getClosest(level, component, range, origin);
-            if (result != null) return result;
-        }
-        return null;
-    }
-
-    public static @Nullable Entity getClosest(ServerLevel level, HolderSet<EntityType<?>> component, int range, Vec3 origin) {
-        return getClosest(level.getEntities((Entity) null, AABB.ofSize(origin, range, range, range), entity -> entity.getType().is(component)).stream(), origin);
+    public static @Nullable Entity getClosest(ServerLevel level, HolderSet<EntityType<?>> entities, int range, Vec3 origin) {
+        var rangeSq = range * range;
+        return getClosest(level.getEntities((Entity) null, AABB.ofSize(origin, 2 * range, 2 * range, 2 * range), entity -> entity.getType().is(entities) && entity.distanceToSqr(origin) <= rangeSq).stream(), origin);
     }
 
     public static @Nullable Entity getClosest(Stream<Entity> entities, Vec3 origin) {
@@ -56,12 +42,12 @@ public class EntityTypeTargetTracker extends TargetTracker<HolderSet<EntityType<
     }
 
     @Override
-    protected DataComponentType<HolderSet<EntityType<?>>> componentType() {
+    protected DataComponentType<EntityTypeTarget> componentType() {
         return EntityCompassesComponents.ENTITY_TYPE_TARGET;
     }
 
     @Override
-    protected void sendUpdate(ServerPlayer player, HolderSet<EntityType<?>> component, TrackerTarget target) {
+    protected void sendUpdate(ServerPlayer player, EntityTypeTarget component, TrackerTarget target) {
         ServerPlayNetworking.send(player, new EntityTypeTargetUpdatePayload(component, target));
     }
 }

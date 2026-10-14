@@ -21,6 +21,7 @@ public class ModLanguageProvider extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add(EntityCompassesItems.ENTITY_COMPASS, "Entity Compass");
         translationBuilder.add(EntityCompassesItems.ENTITY_TYPE_COMPASS, "Entity Type Compass");
+        translationBuilder.add(EntityCompassesItems.ENTITY_TYPE_COMPASS.getDescriptionId() + ".range", "Range: %s");
         translationBuilder.add(getKey(EntityCompassItem.UNKNOWN_ENTITY), "???");
     }
 

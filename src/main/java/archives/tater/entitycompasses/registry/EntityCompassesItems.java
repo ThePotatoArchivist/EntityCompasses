@@ -1,12 +1,12 @@
 package archives.tater.entitycompasses.registry;
 
 import archives.tater.entitycompasses.EntityCompasses;
+import archives.tater.entitycompasses.component.EntityTypeTarget;
 import archives.tater.entitycompasses.item.EntityCompassItem;
 import archives.tater.entitycompasses.item.EntityTypeCompassItem;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTabs;
@@ -28,7 +28,7 @@ public interface EntityCompassesItems {
 
     Item ENTITY_TYPE_COMPASS = register("entity_type_compass", new EntityTypeCompassItem(new Item.Properties()
             .stacksTo(1)
-            .component(EntityCompassesComponents.ENTITY_TYPE_TARGET, HolderSet.direct())
+            .component(EntityCompassesComponents.ENTITY_TYPE_TARGET, EntityTypeTarget.DEFAULT)
     ));
 
     static void init() {
