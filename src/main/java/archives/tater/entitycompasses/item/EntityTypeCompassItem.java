@@ -28,8 +28,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static net.minecraft.util.Mth.clamp;
+
 @SuppressWarnings("UnstableApiUsage")
 public class EntityTypeCompassItem extends Item {
+    public static final int MIN_RANGE = 0;
+    public static final int MAX_RANGE = 512;
+
     public EntityTypeCompassItem(Properties properties) {
         super(properties);
     }
@@ -71,11 +76,16 @@ public class EntityTypeCompassItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
         var target = stack.get(EntityCompassesComponents.ENTITY_TYPE_TARGET);
-        if (target == null || target.size() == 0) return;
-        tooltipComponents.add(target.unwrap().map(
-                EntityTypeCompassItem::getTranslationOrFallback,
-                set -> ComponentUtils.formatList(set, type -> type.value().getDescription()).copy()
-        ).withStyle(ChatFormatting.GRAY));
+        if (target != null && target.size() != 0)
+            tooltipComponents.add(target.unwrap().map(
+                    EntityTypeCompassItem::getTranslationOrFallback,
+                    set -> ComponentUtils.formatList(set, type -> type.value().getDescription()).copy()
+            ).withStyle(ChatFormatting.GRAY));
+
+        var range = stack.get(EntityCompassesComponents.TARGET_RANGE);
+        if (range != null) {
+            tooltipComponents.add(Component.literal(range.toString()));
+        }
     }
 
     private static MutableComponent getTranslationOrFallback(TagKey<EntityType<?>> tag) {
@@ -88,5 +98,14 @@ public class EntityTypeCompassItem extends Item {
         return Arrays.stream(s.split("_"))
                 .map(word -> Character.toUpperCase(word.charAt(0)) + word.substring(1))
                 .collect(Collectors.joining(" "));
+    }
+
+    public static boolean addRange(ItemStack stack, int amount) {
+        var range = stack.get(EntityCompassesComponents.TARGET_RANGE);
+        if (range == null) return false;
+        var newRange = clamp(range + amount, MIN_RANGE, MAX_RANGE);
+        if (newRange == range) return false;
+        stack.set(EntityCompassesComponents.TARGET_RANGE, newRange);
+        return true;
     }
 }

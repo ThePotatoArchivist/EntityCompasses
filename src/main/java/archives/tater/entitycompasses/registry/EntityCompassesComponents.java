@@ -3,6 +3,7 @@ package archives.tater.entitycompasses.registry;
 import archives.tater.entitycompasses.EntityCompasses;
 import archives.tater.entitycompasses.EntityReference;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
@@ -45,6 +46,11 @@ public interface EntityCompassesComponents {
             .persistent(ComponentSerialization.CODEC)
             .networkSynchronized(ComponentSerialization.STREAM_CODEC)
             .cacheEncoding()
+    );
+
+    DataComponentType<Integer> TARGET_RANGE = register("taget_range", builder -> builder
+            .persistent(Codec.intRange(0, 512))
+            .networkSynchronized(ByteBufCodecs.VAR_INT)
     );
 
     static void init() {
