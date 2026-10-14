@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_entity_type_compass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "entitycompasses:entity_type_compass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "entitycompasses:entity_type_compass_reset"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_entity_type_compass"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "entitycompasses:entity_type_compass_reset"
+    ]
+  }
+}
