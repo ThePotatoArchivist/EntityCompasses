@@ -1,0 +1,4 @@
+@MethodsReturnNonnullByDefault
+package archives.tater.entitycompasses.recipe;
+
+import net.minecraft.MethodsReturnNonnullByDefault;

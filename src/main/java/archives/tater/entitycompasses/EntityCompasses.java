@@ -1,10 +1,7 @@
 package archives.tater.entitycompasses;
 
 import archives.tater.entitycompasses.compat.simulated.SimulatedCompat;
-import archives.tater.entitycompasses.registry.EntityCompassesAttachments;
-import archives.tater.entitycompasses.registry.EntityCompassesComponents;
-import archives.tater.entitycompasses.registry.EntityCompassesItems;
-import archives.tater.entitycompasses.registry.EntityCompassesNetworking;
+import archives.tater.entitycompasses.registry.*;
 import archives.tater.entitycompasses.tracker.TargetTracker;
 
 import net.fabricmc.api.ModInitializer;
@@ -32,6 +29,8 @@ public class EntityCompasses implements ModInitializer {
 
         EntityCompassesComponents.init();
         EntityCompassesItems.init();
+        EntityCompassesIngredients.init();
+        EntityCompassesRecipes.init();
         EntityCompassesAttachments.init();
         EntityCompassesNetworking.init();
 

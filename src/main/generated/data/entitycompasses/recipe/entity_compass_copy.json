@@ -1,0 +1,32 @@
+{
+  "type": "entitycompasses:crafting_transmute",
+  "base": {
+    "fabric:type": "fabric:all",
+    "ingredients": [
+      {
+        "item": "entitycompasses:entity_compass"
+      },
+      {
+        "fabric:type": "entitycompasses:has_component",
+        "component": "entitycompasses:entity_target"
+      }
+    ]
+  },
+  "category": "misc",
+  "materials": [
+    {
+      "fabric:type": "fabric:difference",
+      "base": {
+        "item": "entitycompasses:entity_compass"
+      },
+      "subtracted": {
+        "fabric:type": "entitycompasses:has_component",
+        "component": "entitycompasses:entity_target"
+      }
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "entitycompasses:entity_compass"
+  }
+}

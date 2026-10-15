@@ -1,0 +1,32 @@
+{
+  "type": "entitycompasses:crafting_transmute",
+  "base": {
+    "fabric:type": "fabric:all",
+    "ingredients": [
+      {
+        "item": "minecraft:compass"
+      },
+      {
+        "fabric:type": "entitycompasses:has_component",
+        "component": "minecraft:lodestone_tracker"
+      }
+    ]
+  },
+  "category": "misc",
+  "materials": [
+    {
+      "fabric:type": "fabric:difference",
+      "base": {
+        "item": "minecraft:compass"
+      },
+      "subtracted": {
+        "fabric:type": "entitycompasses:has_component",
+        "component": "minecraft:lodestone_tracker"
+      }
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "minecraft:compass"
+  }
+}
