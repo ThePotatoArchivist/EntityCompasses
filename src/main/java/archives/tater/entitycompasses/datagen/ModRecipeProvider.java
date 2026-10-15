@@ -7,7 +7,6 @@ import archives.tater.entitycompasses.registry.EntityCompassesItems;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.fabricmc.fabric.api.recipe.v1.ingredient.DefaultCustomIngredients;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 
 import net.minecraft.advancements.Advancement;
@@ -61,14 +60,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         "",
                         CraftingBookCategory.MISC,
                         new ItemStack(item.asItem(), 2),
-                        DefaultCustomIngredients.all(
-                                Ingredient.of(item),
-                                new HasComponentIngredient(componentType).toVanilla()
-                        ),
-                        NonNullList.of(Ingredient.EMPTY, DefaultCustomIngredients.difference(
-                                Ingredient.of(item),
-                                new HasComponentIngredient(componentType).toVanilla()
-                        ))
+                        new HasComponentIngredient(Ingredient.of(item), componentType).toVanilla(),
+                        NonNullList.of(Ingredient.EMPTY, new HasComponentIngredient(Ingredient.of(item), componentType, true).toVanilla())
                 ),
                 RecipeCategory.MISC,
                 builder -> builder.addCriterion(getHasName(item), has(item))
