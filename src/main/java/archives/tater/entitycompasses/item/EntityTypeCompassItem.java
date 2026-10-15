@@ -18,6 +18,8 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
+import static archives.tater.entitycompasses.item.EntityCompassItem.createFilledResult;
+
 @SuppressWarnings("UnstableApiUsage")
 public class EntityTypeCompassItem extends Item {
 
@@ -29,19 +31,20 @@ public class EntityTypeCompassItem extends Item {
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand hand) {
         var target = stack.get(EntityCompassesComponents.ENTITY_TYPE_TARGET);
         if (target == null || !target.canModifyEntities()) return InteractionResult.PASS;
-        var set = target.entities();
+
+        var result = stack.copyWithCount(1);
 
         if (player.isSecondaryUseActive()) {
-            if (!interactionTarget.getType().is(set)) return InteractionResult.FAIL;
+            if (!interactionTarget.getType().is(target.entities())) return InteractionResult.FAIL;
 
-            stack.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, target.withRemovedEntity(interactionTarget.getType()));
+            result.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, target.withRemovedEntity(interactionTarget.getType()));
         } else {
-            if (interactionTarget.getType().is(set)) return InteractionResult.FAIL;
+            if (interactionTarget.getType().is(target.entities())) return InteractionResult.FAIL;
 
-            stack.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, target.withAddedEntity(interactionTarget.getType()));
+            result.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, target.withAddedEntity(interactionTarget.getType()));
         }
 
-        player.setItemInHand(hand, stack);
+        player.setItemInHand(hand, createFilledResult(stack, player, result));
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
 
         return InteractionResult.SUCCESS;

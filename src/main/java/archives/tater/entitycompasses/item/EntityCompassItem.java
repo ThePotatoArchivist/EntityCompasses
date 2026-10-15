@@ -17,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
@@ -30,10 +31,32 @@ public class EntityCompassItem extends Item {
         super(properties);
     }
 
+    /// Version of [ItemUtils#createFilledResult] that is safe for [Item#interactLivingEntity]
+    public static ItemStack createFilledResult(ItemStack emptyStack, Player player, ItemStack filledStack) {
+        if (player.hasInfiniteMaterials()) {
+            if (!player.getInventory().contains(filledStack))
+                player.getInventory().add(filledStack);
+
+            return emptyStack;
+        }
+
+        // Must check this before consume because if #interactLivingEntity empties stack the held item is forcibly set to EMPTY afterwards
+        if (emptyStack.getCount() <= 1)
+            return filledStack;
+
+        emptyStack.consume(1, player);
+
+        if (!player.getInventory().add(filledStack))
+            player.drop(filledStack, false);
+
+        return emptyStack;
+    }
+
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand hand) {
-        stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(interactionTarget));
-        player.setItemInHand(hand, stack);
+        var result = stack.copyWithCount(1);
+        result.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(interactionTarget));
+        player.setItemInHand(hand, createFilledResult(stack, player, result));
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResult.SUCCESS;
     }
