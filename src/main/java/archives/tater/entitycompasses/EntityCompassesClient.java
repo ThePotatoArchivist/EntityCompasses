@@ -37,13 +37,13 @@ public class EntityCompassesClient implements ClientModInitializer {
         var amt = (int) accScroll;
         accScroll -= amt;
         if (amt == 0)
-            return true;
+            return false;
 
         var changeAmount = Screen.hasShiftDown()
                 ? -10 * amt
                 : -amt;
 
-        if (!EntityTypeTarget.addRange(stack, changeAmount)) return true;
+        if (!EntityTypeTarget.addRange(stack, changeAmount)) return false;
 
         ClientPlayNetworking.send(new RangeScrollPayload(
                 screen.getMenu().containerId,
@@ -73,7 +73,7 @@ public class EntityCompassesClient implements ClientModInitializer {
 
         ScreenEvents.BEFORE_INIT.register((client, screen, scaledWidth, scaledHeight) -> {
             if (screen instanceof AbstractContainerScreen<?> abstractContainerScreen) {
-                ScreenMouseEvents.afterMouseScroll(screen).register((_screen, x, y, horiz, vert) ->
+                ScreenMouseEvents.allowMouseScroll(screen).register((_screen, x, y, horiz, vert) ->
                         onMouseScrolled(abstractContainerScreen, x, y, vert));
             }
         });
