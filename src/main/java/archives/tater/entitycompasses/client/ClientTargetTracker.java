@@ -2,6 +2,8 @@ package archives.tater.entitycompasses.client;
 
 import archives.tater.entitycompasses.tracker.TrackerTarget;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,7 +21,7 @@ public class ClientTargetTracker {
             trackers.put(key, target);
     }
 
-    public static TrackerTarget get(Object key) {
+    public static @Nullable TrackerTarget get(Object key) {
         return trackers.get(key);
     }
 }

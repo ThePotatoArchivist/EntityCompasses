@@ -13,6 +13,7 @@ import static net.minecraft.util.Mth.*;
 
 public sealed interface TrackerTarget {
     None NONE = new None();
+    Origin ORIGIN = new Origin();
 
     int MAX_BLOCK_DISTANCE = 8 * 16;
     int MAX_CHUNK_DISTANCE = 16 * 16;
@@ -21,9 +22,10 @@ public sealed interface TrackerTarget {
         public TrackerTarget decode(ByteBuf buffer) {
             return switch (buffer.readByte()) {
                 case 0 -> NONE;
-                case 1 -> Block.CODEC.decode(buffer);
-                case 2 -> Chunk.CODEC.decode(buffer);
-                case 3 -> Angle.CODEC.decode(buffer);
+                case 1 -> ORIGIN;
+                case 2 -> Block.CODEC.decode(buffer);
+                case 3 -> Chunk.CODEC.decode(buffer);
+                case 4 -> Angle.CODEC.decode(buffer);
                 default -> throw new IllegalArgumentException("Invalid Tracker Target type");
             };
         }
@@ -31,28 +33,29 @@ public sealed interface TrackerTarget {
         @Override
         public void encode(ByteBuf buffer, TrackerTarget value) {
             switch (value) {
-                case None ignored -> {
-                    buffer.writeByte(0);
-                }
+                case None ignored -> buffer.writeByte(0);
+                case Origin ignored -> buffer.writeByte(1);
                 case Block block -> {
-                    buffer.writeByte(1);
+                    buffer.writeByte(2);
                     Block.CODEC.encode(buffer, block);
                 }
                 case Chunk chunk -> {
-                    buffer.writeByte(2);
+                    buffer.writeByte(3);
                     Chunk.CODEC.encode(buffer, chunk);
                 }
                 case Angle angle -> {
-                    buffer.writeByte(3);
+                    buffer.writeByte(4);
                     Angle.CODEC.encode(buffer, angle);
                 }
             }
         }
     };
+
     BlockPos getApproximatePosition(Vec3 origin);
 
     static TrackerTarget create(@Nullable BlockPos target, Vec3 origin) {
         if (target == null) return NONE;
+        if (target.getX() == floor(origin.x) && target.getY() == floor(origin.y) && target.getZ() == floor(origin.z)) return ORIGIN;
         var difference = target.getCenter().subtract(origin);
         var distanceSq = difference.horizontalDistanceSqr();
         if (distanceSq < MAX_BLOCK_DISTANCE * MAX_BLOCK_DISTANCE) return new Block(target);
@@ -100,6 +103,20 @@ public sealed interface TrackerTarget {
         public BlockPos getApproximatePosition(Vec3 origin) {
             var angle = this.angle * TWO_PI / INCREMENTS;
             return BlockPos.containing(origin.add(ASSUMED_DISTANCE * sin(angle), 0, ASSUMED_DISTANCE * cos(angle)));
+        }
+    }
+
+    final class Origin implements TrackerTarget {
+        private Origin() {}
+
+        @Override
+        public BlockPos getApproximatePosition(Vec3 origin) {
+            return BlockPos.containing(origin);
+        }
+
+        @Override
+        public String toString() {
+            return "Origin";
         }
     }
 
