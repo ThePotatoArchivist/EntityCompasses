@@ -33,7 +33,12 @@ public class EntityCompassItem extends Item {
 
     /// Version of [ItemUtils#createFilledResult] that is safe for [Item#interactLivingEntity]
     public static ItemStack createFilledResult(ItemStack emptyStack, Player player, ItemStack filledStack) {
-        if (player.hasInfiniteMaterials()) {
+        return createFilledResult(emptyStack, player, filledStack, true);
+    }
+
+    /// Version of [ItemUtils#createFilledResult] that is safe for [Item#interactLivingEntity]
+    public static ItemStack createFilledResult(ItemStack emptyStack, Player player, ItemStack filledStack, boolean preventDuplicates) {
+        if (preventDuplicates && player.hasInfiniteMaterials()) {
             if (!player.getInventory().contains(filledStack))
                 player.getInventory().add(filledStack);
 

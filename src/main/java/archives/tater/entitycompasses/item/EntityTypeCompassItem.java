@@ -44,7 +44,7 @@ public class EntityTypeCompassItem extends Item {
             result.set(EntityCompassesComponents.ENTITY_TYPE_TARGET, target.withAddedEntity(interactionTarget.getType()));
         }
 
-        player.setItemInHand(hand, createFilledResult(stack, player, result));
+        player.setItemInHand(hand, createFilledResult(stack, player, result, false));
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
 
         return InteractionResult.SUCCESS;
