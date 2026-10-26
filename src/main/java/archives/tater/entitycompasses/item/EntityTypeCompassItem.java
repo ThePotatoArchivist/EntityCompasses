@@ -53,7 +53,7 @@ public class EntityTypeCompassItem extends Item {
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (entity instanceof ServerPlayer serverPlayer)
-            level.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER).addTracker(serverPlayer, stack);
+            serverPlayer.getAttachedOrCreate(EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER).addTracker(stack);
     }
 
     @Override

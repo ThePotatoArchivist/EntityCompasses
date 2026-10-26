@@ -27,7 +27,18 @@ public class InventoryMixin {
     private void clearTrackers(CallbackInfo ci) {
         if (!(player instanceof ServerPlayer serverPlayer)) return;
 
-        TargetTracker.clearTrackers(serverPlayer, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
-        TargetTracker.clearTrackers(serverPlayer, EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER);
+        TargetTracker.clear(serverPlayer, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
+        TargetTracker.clear(serverPlayer, EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER);
+    }
+
+    @Inject(
+            method = "tick",
+            at = @At("TAIL")
+    )
+    private void tickTrackers(CallbackInfo ci) {
+        if (!(player instanceof ServerPlayer serverPlayer)) return;
+
+        TargetTracker.tick(serverPlayer, EntityCompassesAttachments.ENTITY_TARGET_TRACKER);
+        TargetTracker.tick(serverPlayer, EntityCompassesAttachments.ENTITY_TYPE_TARGET_TRACKER);
     }
 }

@@ -17,8 +17,8 @@ import static java.util.Objects.requireNonNullElse;
 
 @SuppressWarnings("UnstableApiUsage")
 public abstract class TargetTracker<T> {
-    private final Map<ServerPlayer, Set<T>> trackers = new WeakHashMap<>();
-    private final Map<ServerPlayer, Map<T, TrackerTarget>> lastPositions = new WeakHashMap<>();
+    private final Set<T> trackers = new HashSet<>();
+    private final Map<T, TrackerTarget> lastPositions = new HashMap<>();
 
     protected abstract @Nullable BlockPos findTarget(ServerLevel level, T component, Vec3 origin);
 
@@ -26,38 +26,33 @@ public abstract class TargetTracker<T> {
 
     protected abstract void sendUpdate(ServerPlayer player, T component, TrackerTarget target);
 
-    public void clearTrackers(ServerPlayer player) {
-        var set = trackers.get(player);
-        if (set == null) return;
-        set.clear();
+    public void clear() {
+        trackers.clear();
     }
 
-    public void addTracker(ServerPlayer player, ItemStack stack) {
+    public void addTracker(ItemStack stack) {
         var component = stack.get(componentType());
         if (component == null) return;
-        trackers.computeIfAbsent(player, player1 -> new HashSet<>()).add(component);
+        trackers.add(component);
     }
 
-    public void tick(ServerLevel level) {
-        trackers.forEach((serverPlayer, trackers) -> {
-            var last = lastPositions.computeIfAbsent(serverPlayer, player -> new HashMap<>(trackers.size()));
-            for (var tracker : trackers) {
-                var target = TrackerTarget.create(findTarget(level, tracker, serverPlayer.position()), serverPlayer.position());
-                if (!target.equals(requireNonNullElse(last.put(tracker, target), TrackerTarget.NONE)))
-                    sendUpdate(serverPlayer, tracker, target);
-            }
-        });
+    public void tick(ServerPlayer player) {
+        for (var tracker : trackers) {
+            var target = TrackerTarget.create(findTarget(player.serverLevel(), tracker, player.position()), player.position());
+            if (!target.equals(requireNonNullElse(lastPositions.put(tracker, target), TrackerTarget.NONE)))
+                sendUpdate(player, tracker, target);
+        }
     }
 
-    public static void tick(ServerLevel level, AttachmentType<? extends TargetTracker<?>> attachmentType) {
-        var tracker = level.getAttached(attachmentType);
+    public static void tick(ServerPlayer player, AttachmentType<? extends TargetTracker<?>> attachmentType) {
+        var tracker = player.getAttached(attachmentType);
         if (tracker == null) return;
-        tracker.tick(level);
+        tracker.tick(player);
     }
 
-    public static void clearTrackers(ServerPlayer player, AttachmentType<? extends TargetTracker<?>> attachmentType) {
-        var tracker = player.serverLevel().getAttached(attachmentType);
+    public static void clear(ServerPlayer player, AttachmentType<? extends TargetTracker<?>> attachmentType) {
+        var tracker = player.getAttached(attachmentType);
         if (tracker == null) return;
-        tracker.clearTrackers(player);
+        tracker.clear();
     }
 }
