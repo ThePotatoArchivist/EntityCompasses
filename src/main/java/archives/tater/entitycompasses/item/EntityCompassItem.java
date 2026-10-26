@@ -55,7 +55,7 @@ public class EntityCompassItem extends Item {
     @Override
     public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand hand) {
         var result = stack.copyWithCount(1);
-        result.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(interactionTarget));
+        setEntity(result, interactionTarget);
         player.setItemInHand(hand, createFilledResult(stack, player, result));
         interactionTarget.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
         return InteractionResult.SUCCESS;
@@ -65,9 +65,16 @@ public class EntityCompassItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
         if (!player.isSecondaryUseActive()) return InteractionResultHolder.pass(stack);
-        stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(player));
+        var result = stack.copyWithCount(1);
+        setEntity(result, player);
         player.playSound(SoundEvents.LODESTONE_COMPASS_LOCK);
-        return InteractionResultHolder.success(stack);
+        return InteractionResultHolder.success(createFilledResult(stack, player, result));
+    }
+
+    private static void setEntity(ItemStack stack, Entity entity) {
+        stack.set(EntityCompassesComponents.ENTITY_TARGET, new EntityReference(entity));
+        var name = entity.getName();
+        stack.set(EntityCompassesComponents.ENTITY_TARGET_NAME, name);
     }
 
     @Override
